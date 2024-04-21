@@ -18,17 +18,19 @@ public class GlobalExceptionHandler {
 
     /**
      * 捕获业务异常
+     *
      * @param ex
      * @return
      */
     @ExceptionHandler
-    public Result exceptionHandler(BaseException ex){
+    public Result exceptionHandler(BaseException ex) {
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
     }
 
     /**
      * 处理SQL异常
+     *
      * @param ex
      * @return
      */
@@ -41,7 +43,8 @@ public class GlobalExceptionHandler {
             String username = split[2];
             String msg = username + MessageConstant.ALREADY_EXISTS;
             return Result.error(msg);
-        } else {
+        }
+        else {
             return Result.error(MessageConstant.UNKNOWN_ERROR);
         }
     }
