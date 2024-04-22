@@ -32,13 +32,10 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private DishMapper dishMapper;
-
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
-
     @Autowired
     private SetmealDishMapper setmealDishMapper;
-
     @Autowired
     private SetmealMapper setmealMapper;
 
@@ -191,7 +188,7 @@ public class DishServiceImpl implements DishService {
             dishIds.add(id);
             // select setmeal_id from setmeal_dish where dish_id in (?,?,?)
             List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(dishIds);
-            if (setmealIds != null && !setmealIds.isEmpty()) {
+            if (setmealIds != null && ! setmealIds.isEmpty()) {
                 for (Long setmealId : setmealIds) {
                     Setmeal setmeal = Setmeal.builder()
                         .id(setmealId)
@@ -201,5 +198,20 @@ public class DishServiceImpl implements DishService {
                 }
             }
         }
+    }
+
+    /**
+     * 根据分类id查询菜品
+     *
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+            .categoryId(categoryId)
+            .status(StatusConstant.ENABLE)
+            .build();
+        return dishMapper.list(dish);
     }
 }

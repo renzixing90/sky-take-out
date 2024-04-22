@@ -15,4 +15,26 @@
         </set>
         where id = #{id}
     </update>
+    <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
+        select setmeal.*, category.name as category_name from setmeal left outer join category on setmeal.category_id =
+        category.id
+        <where>
+            <if test="name != null">and setmeal.name like concat('%',#{name},'%')</if>
+            <if test="categoryId != null">and setmeal.category_id = #{categoryId}</if>
+            <if test="status != null">and setmeal.status = #{status}</if>
+        </where>
+        order by setmeal.create_time desc
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into setmeal (category_id, name, price, status, description, image, create_time, update_time,
+                             create_user, update_user)
+        VALUES (#{categoryId}, #{name}, #{price}, #{status}, #{description}, #{image}, #{createTime}, #{updateTime},
+                #{createUser}, #{updateUser})
+    </insert>
+    <delete id="deleteByIds">
+        delete from setmeal where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
