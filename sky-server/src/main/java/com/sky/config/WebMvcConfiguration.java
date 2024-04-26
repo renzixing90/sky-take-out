@@ -90,7 +90,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
             .build();
         return docket;
     }
-
     /**
      * 设置静态资源映射
      *
